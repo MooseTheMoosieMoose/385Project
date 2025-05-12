@@ -98,6 +98,8 @@ def main_loop():
     if (avg_light > 600 or avg_temp > 150 or avg_moisture > 700):
         sound_buzzer()
 
+    activate_watering_hand()
+
     #TODO watering, heat and light
 
 
@@ -108,6 +110,8 @@ def config_GPIO() -> None:
 
     #Config individual pins
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
+    GPIO.setup(12, GPIO.OUT)
+
 
 def analog_read() -> tuple[int, int, int]:
     #Flush the buffer
@@ -144,7 +148,9 @@ def sound_buzzer():
 
 #Clarisse - servo code to water
 def activate_watering_hand():
-    pass
+    pwm = GPIO.PWM(12, 50)
+    pwm.start(0)
+    pwm.ChangeDutyCycle(20)
 
 if __name__ == "__main__":
     main()
