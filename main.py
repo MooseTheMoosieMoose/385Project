@@ -61,10 +61,10 @@ moisture_buffer = RollingBuffer(50, 100)
 #Program entry point, will fire main_loop every 1 minute
 def main():
     #The number of seconds between each firing of the main loop
-    update_delta: int = 60
+    update_delta: int = 5
 
     #Ping the arduino
-    ser.write("\r\n")
+    #ser.write("\r\n")
 
     #Get the current time, fire main loop once
     cur_time: int = int(time.time())
@@ -74,6 +74,7 @@ def main():
     while True:
         next_time: int = int(time.time())
         if (next_time - cur_time) > update_delta:
+            cur_time = next_time
             main_loop()
 
 #Main loop triggered by the periodic nature of main()
@@ -111,7 +112,7 @@ def analog_read() -> tuple[int, int, int]:
     moist_val: int = int.from_bytes(data[4:])
 
     #Return thruple of analog inputs
-    return tuple(light_val, therm_val, moist_val)
+    return (light_val, therm_val, moist_val)
 
 
 
