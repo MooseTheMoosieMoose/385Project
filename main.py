@@ -110,9 +110,11 @@ def config_GPIO() -> None:
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
 
 def analog_read() -> tuple[int, int, int]:
-    #Listen back on the line
-    data: bytes = bytes()
-
+    #Flush the buffer
+    while ser.in_waiting > 0:
+        _ = ser.read_all()
+    
+    #Wait for a sync byte, then log
     while True:
         if ser.in_waiting >= 1:
             test_code = ser.read(1)
@@ -121,7 +123,7 @@ def analog_read() -> tuple[int, int, int]:
                 print("\tReceiving!...")
                 #Wait until ready
                 if ser.in_waiting >= 6:
-                    data = ser.read(6)
+                    data: bytes = ser.read(6)
                     unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
                     return unpacked
 
