@@ -7,6 +7,7 @@
 import time, sys, struct
 import serial
 import serial.tools.list_ports
+import RPi.GPIO as GPIO
 
 
 #==LOCAL CLASSES=========================================================================
@@ -63,8 +64,8 @@ def main():
     #The number of seconds between each firing of the main loop
     update_delta: int = 5
 
-    #Ping the arduino
-    #ser.write("\r\n")
+    #Set up GPIO pins
+    config_GPIO()
 
     #Get the current time, fire main loop once
     cur_time: int = int(time.time())
@@ -91,25 +92,34 @@ def main_loop():
     avg_temp: int = heat_buffer.avg()
     avg_moisture: int = moisture_buffer.avg()
 
-    print(f"Light: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
+    print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
 
     #TODO decide how to act
 
 
 #==HELPER FUNCTIONS=========================================================================
+def config_GPIO() -> None:
+    GPIO.setwarnings(False)
+    GPIO.setmode(GPIO.BCM)
+
+    #Config individual pins
+    GPIO.setup(29, GPIO.OUT) #Buzzer pin
+
 def analog_read() -> tuple[int, int, int]:
     #Listen back on the line
     data: bytes = bytes()
 
-    #Wait until ready
-    if ser.in_waiting >= 6:
-        data = ser.read(6)
-        unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
-
-    #Return thruple of analog inputs
-    return unpacked
-
-
+    while True:
+        if ser.in_waiting >= 1:
+            test_code = ser.read(1)
+            print("\tPending arduino transmission...")
+            if (int.from_bytes(test_code) == 253):
+                print("\tReceiving!...")
+                #Wait until ready
+                if ser.in_waiting >= 6:
+                    data = ser.read(6)
+                    unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
+                    return unpacked
 
 #Nicole - pass an update to the LCD, unknown how this works, we can reframe it later
 def update_LCD():
@@ -117,7 +127,9 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    pass
+    GPIO.output(29, True)
+    time.sleep(0.5)
+    GPIO.output(29, False)
 
 #Clarisse - servo code to water
 def activate_watering_hand():
@@ -125,3 +137,4 @@ def activate_watering_hand():
 
 if __name__ == "__main__":
     main()
+    
