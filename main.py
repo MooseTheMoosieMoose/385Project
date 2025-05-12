@@ -71,11 +71,11 @@ def main():
     while True:
         next_time: int = int(time.time())
         if (next_time - cur_time) > update_delta:
-            print("Main Loop Executing...")
             main_loop()
 
 #Main loop triggered by the periodic nature of main()
 def main_loop():
+    print("Main Loop Executing...")
     #Update analog levels, cur_x gets the most recent values
     cur_light, cur_temp, cur_moisture = analog_read()
     light_buffer.push(cur_light)
@@ -94,10 +94,7 @@ def main_loop():
 
 #==HELPER FUNCTIONS=========================================================================
 def analog_read() -> tuple[int, int, int]:
-    #Ping the analog module to get new values
-    ser.write(7)
-
-    #Listen back
+    #Listen back on the line
     data: bytes = bytes()
     try:
         num_bytes = 6
@@ -121,18 +118,6 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    pass
-
-#Moose - get the current heat level
-def get_heat_level():
-    pass
-
-#Moose - get the current light level
-def get_light_level():
-    pass
-
-#Gabe - get the current moisture level
-def get_moisture_level():
     pass
 
 #Clarisse - servo code to water
