@@ -59,6 +59,8 @@ heat_buffer = RollingBuffer(50, 90)
 moisture_buffer = RollingBuffer(50, 100)
 
 #Test PWM controller
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
 pwm = GPIO.PWM(18, 50)
 
 #==MAIN====================================================================================
@@ -108,9 +110,6 @@ def main_loop():
 
 #==HELPER FUNCTIONS=========================================================================
 def config_GPIO() -> None:
-    GPIO.setwarnings(False)
-    GPIO.setmode(GPIO.BCM)
-
     #Config individual pins
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
     GPIO.setup(18, GPIO.OUT)
