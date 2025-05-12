@@ -41,10 +41,13 @@ class RollingBuffer:
 ports = serial.tools.list_ports.comports()
 p_target = ""
 for p in ports:
+    print(f"Found Port: {p.description}")
     if ("uno" in p.description.lower() or "arduino" in p.description.lower() or "r3" in p.description.lower()):
+        print(f"Port match found, setting DEV_PATH to {p.device}")
         p_target = p.device
 try:
     ser = serial.Serial(p_target, 9600)
+    print(f"Serial connection created!")
 except:
     print(f"Enumeration targeted: {p_target}, which failed to open!")
     sys.exit()
