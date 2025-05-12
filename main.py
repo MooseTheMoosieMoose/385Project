@@ -65,8 +65,10 @@ moisture_buffer = RollingBuffer(50, 100)
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(29, GPIO.OUT) #Buzzer pin
-GPIO.setup(12, GPIO.OUT)
+
+GPIO.setup(12, GPIO.OUT) #Servo pin
 pwm = GPIO.PWM(12, 50)
+pwm.start(0)
 
 lcd=LCD()
 
@@ -160,7 +162,23 @@ def sound_buzzer():
 
 #Clarisse - servo code to water
 def activate_watering_hand():
-    pwm.start(50)
+def set_angle(angle):
+    duty = 2 + (angle / 18)
+    GPIO.output(servo_pin, True)
+    pwm.ChangeDutyCycle(duty)
+    time.sleep(0.5)
+    GPIO.output(servo_pin, False)
+    pwm.ChangeDutyCycle(0)
+
+try:
+    while True:
+        set_angle(0)
+        time.sleep(1)
+        set_angle(90)
+        time.sleep(1)
+        set_angle(180)
+        time.sleep(1)
+
 
 if __name__ == "__main__":
     main()
