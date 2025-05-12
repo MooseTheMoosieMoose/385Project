@@ -110,7 +110,7 @@ def config_GPIO() -> None:
 
     #Config individual pins
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
-    GPIO.setup(12, GPIO.OUT)
+    GPIO.setup(18, GPIO.OUT)
 
 
 def analog_read() -> tuple[int, int, int]:
@@ -148,7 +148,7 @@ def sound_buzzer():
 
 #Clarisse - servo code to water
 def activate_watering_hand():
-    pwm = GPIO.PWM(12, 50)
+    pwm = GPIO.PWM(18, 50)
     pwm.start(0)
     pwm.ChangeDutyCycle(20)
 
