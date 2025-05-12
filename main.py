@@ -11,7 +11,7 @@ import RPi.GPIO as GPIO
 
 from rpi_lcd import LCD
 
-
+servo_pin = 18
 
 #==LOCAL CLASSES=========================================================================
 #A simple rolling buffer that allows for averages to be taken over a rolling stack of samples
@@ -66,8 +66,8 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(29, GPIO.OUT) #Buzzer pin
 
-GPIO.setup(12, GPIO.OUT) #Servo pin
-pwm = GPIO.PWM(12, 50)
+GPIO.setup(servo_pin), GPIO.OUT) #Servo pin
+pwm = GPIO.PWM(servo_pin, 50)
 pwm.start(0)
 
 lcd=LCD()
@@ -124,7 +124,7 @@ def main_loop():
 def config_GPIO() -> None:
     #Config individual pins
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
-    GPIO.setup(18, GPIO.OUT)
+    GPIO.setup(servo_pin), GPIO.OUT)
 
 
 def analog_read() -> tuple[int, int, int]:
