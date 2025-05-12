@@ -119,13 +119,18 @@ def analog_read() -> tuple[int, int, int]:
         if ser.in_waiting >= 1:
             test_code = ser.read(1)
             print("\tPending arduino transmission...")
+            #Advance only if the read byte is the sync byte, 253
             if (int.from_bytes(test_code) == 253):
                 print("\tReceiving!...")
+
                 #Wait until ready
-                if ser.in_waiting >= 6:
-                    data: bytes = ser.read(6)
-                    unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
-                    return unpacked
+                while ser.in_waiting < 6:
+                    pass
+
+                #Pull
+                data: bytes = ser.read(6)
+                unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
+                return unpacked
 
 #Nicole - pass an update to the LCD, unknown how this works, we can reframe it later
 def update_LCD():
