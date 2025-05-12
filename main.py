@@ -42,7 +42,7 @@ ports = serial.tools.list_ports.comports()
 p_target = ""
 for p in ports:
     print(f"Found Port: {p.description}")
-    if ("uno" in p.description.lower() or "arduino" in p.description.lower() or "r3" in p.description.lower()):
+    if ("uno" in p.description.lower() or "arduino" in p.description.lower() or "ttyacm" in p.description.lower()):
         print(f"Port match found, setting DEV_PATH to {p.device}")
         p_target = p.device
 try:
