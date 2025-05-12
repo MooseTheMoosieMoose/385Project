@@ -66,7 +66,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(29, GPIO.OUT) #Buzzer pin
 
-GPIO.setup(servo_pin), GPIO.OUT) #Servo pin
+GPIO.setup(servo_pin, GPIO.OUT) #Servo pin
 pwm = GPIO.PWM(servo_pin, 50)
 pwm.start(0)
 
@@ -124,7 +124,7 @@ def main_loop():
 def config_GPIO() -> None:
     #Config individual pins
     GPIO.setup(29, GPIO.OUT) #Buzzer pin
-    GPIO.setup(servo_pin), GPIO.OUT)
+    GPIO.setup(servo_pin, GPIO.OUT)
 
 
 def analog_read() -> tuple[int, int, int]:
