@@ -41,7 +41,7 @@ class RollingBuffer:
 ports = serial.tools.list_ports.comports()
 p_target = ""
 for p in ports:
-    if "uno" in p.description.lower():
+    if ("uno" in p.description.lower() or "arduino" in p.description.lower() or "r3" in p.description.lower()):
         p_target = p.device
 try:
     ser = serial.Serial(p_target, 9600)
