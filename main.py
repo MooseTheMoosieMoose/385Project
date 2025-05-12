@@ -9,6 +9,9 @@ import serial
 import serial.tools.list_ports
 import RPi.GPIO as GPIO
 
+from rpi_lcd import LCD
+
+
 
 #==LOCAL CLASSES=========================================================================
 #A simple rolling buffer that allows for averages to be taken over a rolling stack of samples
@@ -65,6 +68,8 @@ GPIO.setup(29, GPIO.OUT) #Buzzer pin
 GPIO.setup(18, GPIO.OUT)
 pwm = GPIO.PWM(18, 50)
 
+lcd=LCD()
+
 #==MAIN====================================================================================
 #Program entry point, will fire main_loop every 1 minute
 def main():
@@ -106,6 +111,7 @@ def main_loop():
         sound_buzzer()
 
     activate_watering_hand()
+    update_LCD()
 
     #TODO watering, heat and light
 
@@ -142,7 +148,7 @@ def analog_read() -> tuple[int, int, int]:
 
 #Nicole - pass an update to the LCD, unknown how this works, we can reframe it later
 def update_LCD():
-    pass
+    lcd.text("Hello",1)
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
