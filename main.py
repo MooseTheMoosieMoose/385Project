@@ -4,8 +4,9 @@
 # Plant Balancer With Automatic Hand Contraption Thing
 
 #==IMPORTS==============================================================================
-import time
+import time, sys
 import serial
+import serial.tools.list_ports
 
 
 #==LOCAL CLASSES=========================================================================
@@ -36,8 +37,17 @@ class RollingBuffer:
         return self._buffer_size
 
 #==GLOBALS================================================================================
-#Master Serial port
-ser = serial.Serial('/dev/ttyUSB2', 9600)
+#Master Serial port - I am losing my fucking mind
+ports = serial.tools.list_ports.comports()
+p_target = ""
+for p in ports:
+    if "uno" in p.description.lower():
+        p_target = p.device
+try:
+    ser = serial.Serial(p_target, 9600)
+except:
+    print(f"Enumeration targeted: {p_target}, which failed to open!")
+    sys.exit()
 
 #Main rolling buffer for light, heat, and moisture
 light_buffer = RollingBuffer(50, 300)
