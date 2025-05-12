@@ -94,7 +94,11 @@ def main_loop():
 
     print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
 
-    #TODO decide how to act
+    #Decide if the plant has had enough light, then SCREAM
+    if (avg_light > 600 or avg_temp > 150 or avg_moisture > 700):
+        sound_buzzer()
+
+    #TODO watering, heat and light
 
 
 #==HELPER FUNCTIONS=========================================================================
