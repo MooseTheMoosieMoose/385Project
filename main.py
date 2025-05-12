@@ -161,7 +161,6 @@ def sound_buzzer():
     GPIO.output(29, False)
 
 #Clarisse - servo code to water
-def activate_watering_hand():
 def set_angle(angle):
     duty = 2 + (angle / 18)
     GPIO.output(servo_pin, True)
@@ -170,15 +169,13 @@ def set_angle(angle):
     GPIO.output(servo_pin, False)
     pwm.ChangeDutyCycle(0)
 
-try:
-    while True:
-        set_angle(0)
-        time.sleep(1)
-        set_angle(90)
-        time.sleep(1)
-        set_angle(180)
-        time.sleep(1)
-
+def activate_watering_hand():
+    set_angle(0)
+    time.sleep(1)
+    set_angle(90)
+    time.sleep(1)
+    set_angle(180)
+    time.sleep(1)
 
 if __name__ == "__main__":
     main()
