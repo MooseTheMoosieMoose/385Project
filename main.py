@@ -4,7 +4,7 @@
 # Plant Balancer With Automatic Hand Contraption Thing
 
 #==IMPORTS==============================================================================
-import time, sys
+import time, sys, struct
 import serial
 import serial.tools.list_ports
 
@@ -100,19 +100,14 @@ def main_loop():
 def analog_read() -> tuple[int, int, int]:
     #Listen back on the line
     data: bytes = bytes()
-    try:
-        num_bytes = 6
-        data = ser.read(num_bytes)
-    except serial.SerialException as e:
-        print(f"Error reading from serial port: {e}")
 
-    #If the bytes are succsessfully read, then bytes is a 6 byte structure, of 3 shorts
-    light_val: int = int.from_bytes(data[0:2])
-    therm_val: int = int.from_bytes(data[2:4])
-    moist_val: int = int.from_bytes(data[4:])
+    #Wait until ready
+    if ser.in_waiting >= 6:
+        data = ser.read(6)
+        unpacked: tuple[int, int, int] = struct.unpack("<3h", data)
 
     #Return thruple of analog inputs
-    return (light_val, therm_val, moist_val)
+    return unpacked
 
 
 
