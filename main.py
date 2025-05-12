@@ -58,6 +58,9 @@ light_buffer = RollingBuffer(50, 300)
 heat_buffer = RollingBuffer(50, 90)
 moisture_buffer = RollingBuffer(50, 100)
 
+#Test PWM controller
+pwm = GPIO.PWM(18, 50)
+
 #==MAIN====================================================================================
 #Program entry point, will fire main_loop every 1 minute
 def main():
@@ -148,9 +151,7 @@ def sound_buzzer():
 
 #Clarisse - servo code to water
 def activate_watering_hand():
-    pwm = GPIO.PWM(18, 50)
-    pwm.start(0)
-    pwm.ChangeDutyCycle(20)
+    pwm.start(50)
 
 if __name__ == "__main__":
     main()
