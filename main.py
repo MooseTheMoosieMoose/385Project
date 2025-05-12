@@ -63,6 +63,9 @@ def main():
     #The number of seconds between each firing of the main loop
     update_delta: int = 60
 
+    #Ping the arduino
+    ser.write("\r\n")
+
     #Get the current time, fire main loop once
     cur_time: int = int(time.time())
     main_loop()
