@@ -109,11 +109,16 @@ def main_loop():
     print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
 
     if (cur_light > 600) or (cur_temp > 150):
-        lcd.text("! ALERT !",1)
-        sound_buzzer()
-        lcd.clear()
-        lcd.text("Yo plant", 1)
-        lcd.text("hot, girl!", 2)
+        sound_da_alarm("Yo plant", "hot, Gamer!!")
+    elif (cur_light < 100):
+        sound_da_alarm("Yo plant", "dark, Gamer!!")
+    elif (cur_moisture > 375):
+        sound_da_alarm("Yo plant", "dry, Gamer!!")
+    elif (cur_moisture > 250):
+        sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
+    elif (cur_temp < 50):
+        sound_da_alarm("Yo plant", "frigid, Gamer!!")
+    
 
     #activate_watering_hand()
     #update_LCD()
@@ -182,6 +187,16 @@ def activate_watering_hand():
     time.sleep(1)
     set_angle(180)
     time.sleep(1)
+
+def sound_da_alarm(line1: str, line2: str) -> None:
+        lcd.text("! ALERT !",1)
+        sound_buzzer()
+        lcd.clear()
+        lcd.text(line1, 1)
+        lcd.text(line2, 2)
+        sound_buzzer()
+        time.sleep(1)
+        lcd.clear()
 
 if __name__ == "__main__":
     main()
