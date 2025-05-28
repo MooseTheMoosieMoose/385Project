@@ -107,12 +107,8 @@ def main_loop():
     avg_moisture: int = moisture_buffer.avg()
 
     print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
-    #lcd.clear()
-    #lcd.text(f"L: {cur_light}, T: {cur_temp}, M: {cur_moisture}")
-
-    #Decide if the plant has had enough light, then SCREAM
-    if (avg_light > 600 or avg_temp > 150 or avg_moisture > 700):
-        sound_buzzer()
+    
+    sound_buzzer()
 
     activate_watering_hand()
     update_LCD()
@@ -158,7 +154,7 @@ def update_LCD():
 def sound_buzzer():
     state = False
     GPIO.output(20, state)
-    for i in range(0, 1000):
+    for _ in range(0, 5000):
         GPIO.output(20, state)
         state = not state
         time.sleep(0.0001)
