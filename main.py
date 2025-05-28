@@ -123,8 +123,6 @@ def main_loop():
         sound_da_alarm("Yo plant", "dark, Gamer!!")
     elif (cur_moisture > 375):
         sound_da_alarm("Yo plant", "dry, Gamer!!")
-        activate_watering_hand_v1()
-        activate_watering_hand_v2()
     elif (cur_moisture < 250):
         sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
     elif (cur_temp < 50):
@@ -133,7 +131,8 @@ def main_loop():
         lcd.text("Plant is Healthy!", 1)
 
     #update_LCD()
-
+    activate_watering_hand_v1()
+    activate_watering_hand_v2()
     #TODO watering, heat and light
 
 
