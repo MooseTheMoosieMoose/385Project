@@ -1,17 +1,20 @@
 #======================================================================================
 # 385 Final project
 # Moose Abou-Harb, Gabriel Schiavone-Hennighausen, Nicole Torbett, Clarisse Yapjoco
-# Plant Balancer With Automatic Hand Contraption Thing
+# Plant Balancer With Automatic Water Dispenser (might give up on hand)
 
 #==IMPORTS==============================================================================
 import time, sys, struct
 import serial
 import serial.tools.list_ports
 import RPi.GPIO as GPIO
-
+import pigpio
 from rpi_lcd import LCD
 
-servo_pin = 18
+servo_pin1 = 18
+servo_pin2 = 17
+servo_pin3 = 27
+pi = pigpio.pi()
 
 #==LOCAL CLASSES=========================================================================
 #A simple rolling buffer that allows for averages to be taken over a rolling stack of samples
@@ -66,8 +69,14 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(20, GPIO.OUT) #Buzzer pin
 
-GPIO.setup(servo_pin, GPIO.OUT) #Servo pin
-pwm = GPIO.PWM(servo_pin, 50)
+GPIO.setup(servo_pin1, GPIO.OUT) #Servo1 pin
+pwm = GPIO.PWM(servo_pin1, 50)
+pwm.start(0)
+GPIO.setup(servo_pin2, GPIO.OUT) #Servo2 pin
+pwm = GPIO.PWM(servo_pin2, 50)
+pwm.start(0)
+GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
+pwm = GPIO.PWM(servo_pin3, 50)
 pwm.start(0)
 
 lcd=LCD()
@@ -114,15 +123,15 @@ def main_loop():
         sound_da_alarm("Yo plant", "dark, Gamer!!")
     elif (cur_moisture > 375):
         sound_da_alarm("Yo plant", "dry, Gamer!!")
+        activate_watering_hand_v1()
+        activate_watering_hand_v2()
     elif (cur_moisture < 250):
         sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
     elif (cur_temp < 50):
         sound_da_alarm("Yo plant", "frigid, Gamer!!")
     else:
         lcd.text("Plant is Healthy!", 1)
-    
 
-    #activate_watering_hand()
     #update_LCD()
 
     #TODO watering, heat and light
@@ -176,19 +185,36 @@ def sound_buzzer():
 #Clarisse - servo code to water
 def set_angle(angle):
     duty = 2 + (angle / 18)
-    GPIO.output(servo_pin, True)
+    GPIO.output(servo_pin1, True)
     pwm.ChangeDutyCycle(duty)
     time.sleep(0.5)
-    GPIO.output(servo_pin, False)
+    GPIO.output(servo_pin1, False)
     pwm.ChangeDutyCycle(0)
 
-def activate_watering_hand():
+def activate_watering_hand_v1():
+    set_angle(270)
+    time.sleep(1)
     set_angle(0)
     time.sleep(1)
-    set_angle(90)
+    set_angle(270)
     time.sleep(1)
-    set_angle(180)
+    set_angle(0)
     time.sleep(1)
+    set_angle(270)
+    time.sleep(1)
+    set_angle(0)
+    time.sleep(1)
+
+def activate_watering_hand_v2():
+pi.set_servo_pulsewidth(17, 2000)  # Servo 1 - center
+pi.set_servo_pulsewidth(18, 2000)  # Servo 2 - far left
+pi.set_servo_pulsewidth(27, 2000)  # Servo 3 - far right
+time.sleep(2)  # Let the servos move
+
+pi.set_servo_pulsewidth(17, 1000)  # Servo 1 - center
+pi.set_servo_pulsewidth(18, 1000)  # Servo 2 - far left
+pi.set_servo_pulsewidth(27, 1000)  # Servo 3 - far right
+time.sleep(2)  # Let the servos move
 
 def sound_da_alarm(line1: str, line2: str) -> None:
         lcd.text("! ALERT !",1)
