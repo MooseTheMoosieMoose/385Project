@@ -110,7 +110,7 @@ def main_loop():
 
     if (cur_light > 600) or (cur_temp > 150):
         sound_da_alarm("Yo plant", "hot, Gamer!!")
-    elif (cur_light < 100):
+    elif (cur_light < 200):
         sound_da_alarm("Yo plant", "dark, Gamer!!")
     elif (cur_moisture > 375):
         sound_da_alarm("Yo plant", "dry, Gamer!!")
@@ -195,7 +195,7 @@ def sound_da_alarm(line1: str, line2: str) -> None:
         lcd.text(line1, 1)
         lcd.text(line2, 2)
         sound_buzzer()
-        time.sleep(1)
+        time.sleep(3)
         lcd.clear()
 
 if __name__ == "__main__":
