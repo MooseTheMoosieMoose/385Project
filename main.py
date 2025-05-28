@@ -64,7 +64,7 @@ moisture_buffer = RollingBuffer(50, 100)
 #Test PWM controller
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(29, GPIO.OUT) #Buzzer pin
+GPIO.setup(20, GPIO.OUT) #Buzzer pin
 
 GPIO.setup(servo_pin, GPIO.OUT) #Servo pin
 pwm = GPIO.PWM(servo_pin, 50)
