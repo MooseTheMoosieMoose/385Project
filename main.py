@@ -107,13 +107,16 @@ def main_loop():
     avg_moisture: int = moisture_buffer.avg()
 
     print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
-    
-    if (cur_light > 600) or (cur_temp > 100) or (cur_moisture < 350):
-        sound_buzzer()
-        print("yaaas we are so screaming, like your mom last night")
 
-    activate_watering_hand()
-    update_LCD()
+    if (cur_light > 600) or (cur_temp > 150):
+        lcd.text("! ALERT !",1)
+        sound_buzzer()
+        lcd.clear()
+        lcd.text("Yo plant", 1)
+        lcd.text("hot, girl!", 2)
+
+    #activate_watering_hand()
+    #update_LCD()
 
     #TODO watering, heat and light
 
@@ -155,7 +158,6 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    print("This is from the buzzer code")
     state = False
     GPIO.output(20, state)
     for _ in range(0, 2500):
