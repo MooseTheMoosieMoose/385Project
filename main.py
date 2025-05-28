@@ -123,7 +123,7 @@ def main_loop():
 #==HELPER FUNCTIONS=========================================================================
 def config_GPIO() -> None:
     #Config individual pins
-    GPIO.setup(29, GPIO.OUT) #Buzzer pin
+    GPIO.setup(20, GPIO.OUT) #Buzzer pin
     GPIO.setup(servo_pin, GPIO.OUT)
 
 
@@ -156,9 +156,9 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    GPIO.output(29, True)
+    GPIO.output(20, True)
     time.sleep(0.5)
-    GPIO.output(29, False)
+    GPIO.output(20, False)
 
 #Clarisse - servo code to water
 def set_angle(angle):
