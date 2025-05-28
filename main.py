@@ -141,7 +141,7 @@ def config_GPIO() -> None:
     #Config individual pins
     GPIO.setup(20, GPIO.OUT) #Buzzer pin
     GPIO.output(20, False)
-    GPIO.setup(servo_pin, GPIO.OUT)
+    GPIO.setup(servo_pin1, GPIO.OUT)
 
 
 def analog_read() -> tuple[int, int, int]:
