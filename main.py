@@ -205,15 +205,15 @@ def activate_watering_hand_v1():
     time.sleep(1)
 
 def activate_watering_hand_v2():
-pi.set_servo_pulsewidth(17, 2000)  # Servo 1 - center
-pi.set_servo_pulsewidth(18, 2000)  # Servo 2 - far left
-pi.set_servo_pulsewidth(27, 2000)  # Servo 3 - far right
-time.sleep(2)  # Let the servos move
+    pi.set_servo_pulsewidth(17, 2000)  # Servo 1 - center
+    pi.set_servo_pulsewidth(18, 2000)  # Servo 2 - far left
+    pi.set_servo_pulsewidth(27, 2000)  # Servo 3 - far right
+    time.sleep(2)  # Let the servos move
 
-pi.set_servo_pulsewidth(17, 1000)  # Servo 1 - center
-pi.set_servo_pulsewidth(18, 1000)  # Servo 2 - far left
-pi.set_servo_pulsewidth(27, 1000)  # Servo 3 - far right
-time.sleep(2)  # Let the servos move
+    pi.set_servo_pulsewidth(17, 1000)  # Servo 1 - center
+    pi.set_servo_pulsewidth(18, 1000)  # Servo 2 - far left
+    pi.set_servo_pulsewidth(27, 1000)  # Servo 3 - far right
+    time.sleep(2)  # Let the servos move
 
 def sound_da_alarm(line1: str, line2: str) -> None:
         lcd.text("! ALERT !",1)
