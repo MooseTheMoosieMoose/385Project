@@ -118,6 +118,8 @@ def main_loop():
         sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
     elif (cur_temp < 50):
         sound_da_alarm("Yo plant", "frigid, Gamer!!")
+    else:
+        lcd.text("Plant is Healthy!", 1)
     
 
     #activate_watering_hand()
