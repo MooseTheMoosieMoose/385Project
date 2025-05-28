@@ -156,9 +156,12 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    GPIO.output(20, True)
-    time.sleep(0.5)
-    GPIO.output(20, False)
+    state = False
+    GPIO.output(20, state)
+    for i in range(0, 1000):
+        GPIO.output(20, state)
+        state = not state
+        time.sleep(0.0001)
 
 #Clarisse - servo code to water
 def set_angle(angle):
