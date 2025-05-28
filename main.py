@@ -108,7 +108,9 @@ def main_loop():
 
     print(f"\tLight: {cur_light}, Heat: {cur_temp}, Moisture: {cur_moisture}")
     
-    sound_buzzer()
+    if (cur_light > 600) or (cur_temp > 100) or (cur_moisture < 350):
+        sound_buzzer()
+        print("yaaas we are so screaming, like your mom last night")
 
     activate_watering_hand()
     update_LCD()
@@ -120,6 +122,7 @@ def main_loop():
 def config_GPIO() -> None:
     #Config individual pins
     GPIO.setup(20, GPIO.OUT) #Buzzer pin
+    GPIO.output(20, False)
     GPIO.setup(servo_pin, GPIO.OUT)
 
 
@@ -152,13 +155,13 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
-    print("We are SO buzzing girl *periodt*")
     state = False
     GPIO.output(20, state)
-    for _ in range(0, 5000):
+    for _ in range(0, 2500):
         GPIO.output(20, state)
         state = not state
         time.sleep(0.0001)
+    GPIO.output(20, False)
 
 #Clarisse - servo code to water
 def set_angle(angle):
