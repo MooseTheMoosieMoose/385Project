@@ -155,6 +155,7 @@ def update_LCD():
 
 #Moose - make the buzzer go brrrr
 def sound_buzzer():
+    print("This is from the buzzer code")
     state = False
     GPIO.output(20, state)
     for _ in range(0, 2500):
