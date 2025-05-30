@@ -123,6 +123,7 @@ def main_loop():
         sound_da_alarm("Yo plant", "dark, Gamer!!")
     elif (cur_moisture > 375):
         sound_da_alarm("Yo plant", "dry, Gamer!!")
+        lcd.text("Plant is dry", 1)
     elif (cur_moisture < 250):
         sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
     elif (cur_temp < 50):
