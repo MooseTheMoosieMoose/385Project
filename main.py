@@ -13,7 +13,8 @@ from rpi_lcd import LCD
 
 servo_pin1 = 18
 servo_pin2 = 17
-servo_pin3 = 27
+# Too many servos, requires PWM driver for extra external power
+# servo_pin3 = 27 
 # pi = pigpio.pi()
 
 #==LOCAL CLASSES=========================================================================
@@ -76,9 +77,9 @@ pwm1.start(0)
 GPIO.setup(servo_pin2, GPIO.OUT) #Servo2 pin
 pwm2 = GPIO.PWM(servo_pin2, 50)
 pwm2.start(0)
-GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
-pwm3 = GPIO.PWM(servo_pin3, 50)
-pwm3.start(0)
+# GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
+# pwm3 = GPIO.PWM(servo_pin3, 50)
+# pwm3.start(0)
 
 lcd = LCD()
 
@@ -189,17 +190,17 @@ def set_angle(angle):
     duty = 2 + (angle / 18)
     GPIO.output(servo_pin1, True)
     GPIO.output(servo_pin2, True)
-    GPIO.output(servo_pin3, True)
+    # GPIO.output(servo_pin3, True)
     pwm1.ChangeDutyCycle(duty)
     pwm2.ChangeDutyCycle(duty)
-    pwm3.ChangeDutyCycle(duty)
+    # pwm3.ChangeDutyCycle(duty)
     time.sleep(0.5)
     GPIO.output(servo_pin1, False)
     GPIO.output(servo_pin2, False)
-    GPIO.output(servo_pin3, False)
+    # GPIO.output(servo_pin3, False)
     pwm1.ChangeDutyCycle(0)
     pwm2.ChangeDutyCycle(0)
-    pwm3.ChangeDutyCycle(0)    
+    # pwm3.ChangeDutyCycle(0)    
 
 def activate_watering_hand_v1():
     set_angle(180)
