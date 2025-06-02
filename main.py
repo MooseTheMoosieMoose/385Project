@@ -146,7 +146,7 @@ def config_GPIO() -> None:
     GPIO.output(20, False)
     GPIO.setup(servo_pin1, GPIO.OUT) #Servo1 pin
     GPIO.setup(servo_pin2, GPIO.OUT) #Servo2 pin
-    GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
+    # GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
 
 def analog_read() -> tuple[int, int, int]:
     #Flush the buffer
