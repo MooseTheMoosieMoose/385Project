@@ -69,17 +69,18 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(20, GPIO.OUT) #Buzzer pin
 
+#Test PWM servos
 GPIO.setup(servo_pin1, GPIO.OUT) #Servo1 pin
-pwm = GPIO.PWM(servo_pin1, 50)
-pwm.start(0)
+pwm1 = GPIO.PWM(servo_pin1, 50)
+pwm1.start(0)
 GPIO.setup(servo_pin2, GPIO.OUT) #Servo2 pin
-pwm = GPIO.PWM(servo_pin2, 50)
-pwm.start(0)
+pwm2 = GPIO.PWM(servo_pin2, 50)
+pwm2.start(0)
 GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
-pwm = GPIO.PWM(servo_pin3, 50)
-pwm.start(0)
+pwm3 = GPIO.PWM(servo_pin3, 50)
+pwm3.start(0)
 
-lcd=LCD()
+lcd = LCD()
 
 #==MAIN====================================================================================
 #Program entry point, will fire main_loop every 1 minute
@@ -123,7 +124,6 @@ def main_loop():
         sound_da_alarm("Yo plant", "dark, Gamer!!")
     elif (cur_moisture > 375):
         sound_da_alarm("Yo plant", "dry, Gamer!!")
-        lcd.text("Plant is dry", 1)
         activate_watering_hand_v1() 
     elif (cur_moisture < 250):
         sound_da_alarm("Yo plant", "*MOIST*, Gamer!!")
@@ -132,10 +132,10 @@ def main_loop():
     else:
         lcd.text("Plant is Healthy!", 1)
 
-    #update_LCD()
+    # Practice code
+    # update_LCD()
     # activate_watering_hand_v1()
     # activate_watering_hand_v2()
-    #TODO watering, heat and light
 
 
 #==HELPER FUNCTIONS=========================================================================
@@ -143,8 +143,9 @@ def config_GPIO() -> None:
     #Config individual pins
     GPIO.setup(20, GPIO.OUT) #Buzzer pin
     GPIO.output(20, False)
-    # GPIO.setup(servo_pin1, GPIO.OUT)
-
+    GPIO.setup(servo_pin1, GPIO.OUT) #Servo1 pin
+    GPIO.setup(servo_pin2, GPIO.OUT) #Servo2 pin
+    GPIO.setup(servo_pin3, GPIO.OUT) #Servo3 pin
 
 def analog_read() -> tuple[int, int, int]:
     #Flush the buffer
@@ -189,23 +190,19 @@ def set_angle(angle):
     GPIO.output(servo_pin1, True)
     GPIO.output(servo_pin2, True)
     GPIO.output(servo_pin3, True)
-    pwm.ChangeDutyCycle(duty)
+    pwm1.ChangeDutyCycle(duty)
+    pwm2.ChangeDutyCycle(duty)
+    pwm3.ChangeDutyCycle(duty)
     time.sleep(0.5)
     GPIO.output(servo_pin1, False)
     GPIO.output(servo_pin2, False)
     GPIO.output(servo_pin3, False)
-    pwm.ChangeDutyCycle(0)
+    pwm1.ChangeDutyCycle(0)
+    pwm2.ChangeDutyCycle(0)
+    pwm3.ChangeDutyCycle(0)    
 
 def activate_watering_hand_v1():
-    set_angle(270)
-    time.sleep(1)
-    set_angle(0)
-    time.sleep(1)
-    set_angle(270)
-    time.sleep(1)
-    set_angle(0)
-    time.sleep(1)
-    set_angle(270)
+    set_angle(180)
     time.sleep(1)
     set_angle(0)
     time.sleep(1)
